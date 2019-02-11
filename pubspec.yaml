@@ -1,0 +1,14 @@
+name: stagexl_interactive_chessboard
+description: An interactive chessboard written for StageXL which allows players to move pieces.
+
+version: 0.1.0
+author: Mark Tanner <admin@64bitdragon.com>
+homepage: https://github.com/marktanner1331/stagexl_interactive_chessboard
+
+environment:
+  sdk: '>=2.1.0 <3.0.0'
+
+dependencies:
+  stagexl: ^1.1.0
+  stagexl_chess_pieces: ^1.0.1
+  chess: ^0.6.5
