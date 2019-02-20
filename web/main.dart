@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:html' as html;
 import 'package:stagexl/stagexl.dart';
-import 'package:stagexl_interactive_chessboard/interactive_chessboard.dart';
+import 'package:stagexl_interactive_chessboard/stagexl_interactive_chessboard.dart';
 
 Stage stage;
 
