@@ -2,7 +2,9 @@ import 'package:stagexl/stagexl.dart' as StageXL;
 import 'package:chess/chess.dart';
 import 'package:stagexl_chess_pieces/stagexl_chess_pieces.dart';
 
+///A wrapper for stagexl_chess_pieces.dart
 class PieceFactory {
+  ///returns the correct sprite for the given piece
   static StageXL.Sprite getSpriteForPiece(Piece piece) {
     switch(piece.type) {
       case PieceType.BISHOP:

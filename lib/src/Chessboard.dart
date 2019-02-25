@@ -12,11 +12,21 @@ class Chessboard extends Sprite {
   num _size = 100;
 
   ///the background color of black squares
-  int SQUARE_BLACK_COLOR = 0xffB58862;
+  int _squareBlackColor = 0xffB58862;
+  int get squareBlackColor => _squareBlackColor;
+  set squareBlackColor(int value) {
+    _squareBlackColor = value;
+    _refreshSquareDefaultBackgroundColors();
+  }
 
   ///the background color of white squares
-  int SQUARE_WHITE_COLOR = 0xffF0D8B5;
-
+  int _squareWhiteColor = 0xffF0D8B5;
+  int get squareWhiteColor => _squareWhiteColor;
+  set squareWhiteColor(int value) {
+    _squareWhiteColor = value;
+    _refreshSquareDefaultBackgroundColors();
+  }
+  
   static const EventStreamProvider<ChessEvent> _onSquareClicked =
       const EventStreamProvider<ChessEvent>(ChessEvent.SQUARE_CLICKED);
 
@@ -61,7 +71,7 @@ class Chessboard extends Sprite {
   ///initializes an empty chess board
   Chessboard() {
     Map<int, String> reverseSquares =
-      Chess.SQUARES.map((name, value) => MapEntry(value, name));
+        Chess.SQUARES.map((name, value) => MapEntry(value, name));
 
     bool isBlack = false;
     for (int i = Chess.SQUARES_A8; i <= Chess.SQUARES_H1; i++) {
@@ -72,9 +82,11 @@ class Chessboard extends Sprite {
         continue;
       }
 
-      Square square = Square(this, reverseSquares[i], isBlack);
+      Square square = Square(reverseSquares[i]);
       square.onMouseClick.listen(_onSquareClick);
       _board[i] = square;
+      square.defaultBackgroundColor =
+          isBlack ? squareBlackColor : squareWhiteColor;
       addChild(square);
 
       isBlack = !isBlack;
@@ -92,6 +104,24 @@ class Chessboard extends Sprite {
     }
 
     redraw();
+  }
+
+  void _refreshSquareDefaultBackgroundColors() {
+    bool isBlack = false;
+    for (int i = Chess.SQUARES_A8; i <= Chess.SQUARES_H1; i++) {
+      /* did we run off the end of the board */
+      if ((i & 0x88) != 0) {
+        i += 7;
+        isBlack = !isBlack;
+        continue;
+      }
+
+      Square square = _board[i];
+      square.defaultBackgroundColor =
+          isBlack ? squareBlackColor : squareWhiteColor;
+      
+      isBlack = !isBlack;
+    }
   }
 
   void _onSquareClick(MouseEvent event) {
