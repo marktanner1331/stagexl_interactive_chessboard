@@ -36,6 +36,14 @@ class Square extends Sprite {
     this._squareName = squareName;
   }
 
+  Sprite get piece {
+    if (this.numChildren == 1) {
+      return getChildAt(0);
+    } else {
+      return null;
+    }
+  }
+
   ///sets the child (usually a chess piece) of the square. setting its width and height to the size of the square
   set piece(Sprite value) {
     removeChildren();

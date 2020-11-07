@@ -231,6 +231,10 @@ class Chessboard extends Sprite {
     }
   }
 
+  Piece get(String square) {
+    return PieceFactory.getPieceForSprite(_board[Chess.SQUARES[square]].piece);
+  }
+
   ///redraws and resizes the board, it may be necessary to call this manually
   ///if one of the colors has been updated after the size has been set
   void redraw() {
