@@ -1,3 +1,7 @@
+## 1.6.1  - 08/11/2020.
+
+- added ability to convert moves from from/to pairs
+
 ## 1.6.0  - 08/11/2020.
 
 - added ability to perform moves

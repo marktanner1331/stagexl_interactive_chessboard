@@ -190,9 +190,14 @@ class Chessboard extends Sprite {
     return move_from_san(san) != null;
   }
 
-  bool performMove(String san) {
+  void performMove(String san) {
     _chess.move(move_from_san(san));
     _refreshPieces();
+  }
+
+  ///creates a Move from a start and end square given in algebraic notation
+  Move moveFromFromAndTo(String from, String to) {
+    return _chess.generate_moves({"square": from}).firstWhere((element) => element.toAlgebraic == to, orElse: () => null);
   }
 
   Move move_from_san(String san) {
