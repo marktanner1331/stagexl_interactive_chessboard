@@ -1,3 +1,7 @@
+## 1.6.2  - 08/11/2020.
+
+- added move_to_san
+
 ## 1.6.1  - 08/11/2020.
 
 - added ability to convert moves from from/to pairs

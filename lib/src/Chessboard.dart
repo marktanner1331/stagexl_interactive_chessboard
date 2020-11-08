@@ -196,6 +196,7 @@ class Chessboard extends Sprite {
   }
 
   ///creates a Move from a start and end square given in algebraic notation
+  ///or null if the move isn't valid/legal
   Move moveFromFromAndTo(String from, String to) {
     return _chess.generate_moves({"square": from}).firstWhere((element) => element.toAlgebraic == to, orElse: () => null);
   }
@@ -212,6 +213,10 @@ class Chessboard extends Sprite {
       }
     }
     return null;
+  }
+
+  String move_to_san(Move move) {
+    return _chess.move_to_san(move);
   }
 
   ///gets the backgroundColor of the given square
