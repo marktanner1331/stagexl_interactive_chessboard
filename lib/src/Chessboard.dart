@@ -29,7 +29,7 @@ class Chessboard extends Sprite {
     _squareWhiteColor = value;
     _refreshSquareDefaultBackgroundColors();
   }
-  
+
   static const EventStreamProvider<ChessEvent> _onSquareClicked =
       const EventStreamProvider<ChessEvent>(ChessEvent.SQUARE_CLICKED);
 
@@ -111,7 +111,7 @@ class Chessboard extends Sprite {
 
   c.Color get turn => _chess.turn;
 
-  void set turn(c.Color value) => _chess.turn  = value;
+  void set turn(c.Color value) => _chess.turn = value;
 
   void _refreshSquareDefaultBackgroundColors() {
     bool isBlack = false;
@@ -126,7 +126,7 @@ class Chessboard extends Sprite {
       Square square = _board[i];
       square.defaultBackgroundColor =
           isBlack ? squareBlackColor : squareWhiteColor;
-      
+
       isBlack = !isBlack;
     }
   }
@@ -184,6 +184,29 @@ class Chessboard extends Sprite {
       Square square = _board[i];
       square.backgroundColor = null;
     }
+  }
+
+  bool isValidMove(String san) {
+    return move_from_san(san) != null;
+  }
+
+  bool performMove(String san) {
+    _chess.move(move_from_san(san));
+    _refreshPieces();
+  }
+
+  Move move_from_san(String san) {
+    var moves = _chess.generate_moves();
+    for (var i = 0, len = moves.length; i < len; i++) {
+      /* strip off any trailing move decorations: e.g Nf3+?! */
+      if (san.replaceAll(new RegExp(r"[+#?!=]+$"), '') ==
+          _chess
+              .move_to_san(moves[i])
+              .replaceAll(new RegExp(r"[+#?!=]+$"), '')) {
+        return moves[i];
+      }
+    }
+    return null;
   }
 
   ///gets the backgroundColor of the given square
@@ -271,7 +294,7 @@ class Chessboard extends Sprite {
   Piece get(dynamic square) {
     if (square is int) {
       String squareName = Chess.algebraic(square);
-     return _chess.get(squareName);
+      return _chess.get(squareName);
     } else {
       return _chess.get(square);
     }

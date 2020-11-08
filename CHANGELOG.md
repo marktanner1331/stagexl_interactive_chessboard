@@ -1,4 +1,8 @@
-## 1.4.0  - 08/11/2020.
+## 1.6.0  - 08/11/2020.
+
+- added ability to perform moves
+
+## 1.5.0  - 08/11/2020.
 
 - added turn
 
