@@ -1,3 +1,7 @@
+## 1.6.3  - 08/11/2020.
+
+- resetting highlights after performMove()
+
 ## 1.6.2  - 08/11/2020.
 
 - added move_to_san

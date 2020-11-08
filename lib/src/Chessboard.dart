@@ -193,6 +193,7 @@ class Chessboard extends Sprite {
   void performMove(String san) {
     _chess.move(move_from_san(san));
     _refreshPieces();
+    resetAllSquareColors();
   }
 
   ///creates a Move from a start and end square given in algebraic notation
