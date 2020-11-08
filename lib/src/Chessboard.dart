@@ -231,7 +231,7 @@ class Chessboard extends Sprite {
   ///or it can be a string e.g. 'a3'
   void remove(dynamic square) {
     if (square is int) {
-      String squareName = getSquareNameFromOffset(square);
+      String squareName = Chess.algebraic(square);
       _chess.remove(squareName);
       _board[square].piece = null;
     } else {
@@ -244,11 +244,6 @@ class Chessboard extends Sprite {
     return _chess.generate_moves({"square": square});
   }
 
-  ///a square offset (used in Move.from and Move.to) is converted to it's string version, e.g. 'a3'
-  String getSquareNameFromOffset(int offset) {
-    return Chess.SQUARES.entries.where((element) => element.value == offset).first.key;
-  }
-
   ///puts a piece on the given square
   ///square can either be an int stored in the same format used in chess.dart (used in Move.from and Move.to)
   ///or it can be a string e.g. 'a3'
@@ -256,7 +251,7 @@ class Chessboard extends Sprite {
     Sprite pieceSprite = PieceFactory.getSpriteForPiece(piece);
 
     if (square is int) {
-      String squareName = getSquareNameFromOffset(square);
+      String squareName = Chess.algebraic(square);
       _chess.put(piece, squareName);
       _board[square].piece = pieceSprite;
     } else {
@@ -270,7 +265,7 @@ class Chessboard extends Sprite {
   ///or it can be a string e.g. 'a3'
   Piece get(dynamic square) {
     if (square is int) {
-      String squareName = getSquareNameFromOffset(square);
+      String squareName = Chess.algebraic(square);
      return _chess.get(squareName);
     } else {
       return _chess.get(square);
