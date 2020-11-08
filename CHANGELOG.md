@@ -1,3 +1,7 @@
+## 1.4.0  - 08/11/2020.
+
+- added turn
+
 ## 1.4.1  - 08/11/2020.
 
 - replaced getSquareNameFromOffset with Chess.algebraic()

@@ -1,5 +1,6 @@
 import 'package:stagexl/stagexl.dart';
 import 'package:chess/chess.dart';
+import 'package:chess/chess.dart' as c;
 import 'dart:math';
 
 import './Square.dart';
@@ -107,6 +108,10 @@ class Chessboard extends Sprite {
 
     loadFromChessObject(Chess());
   }
+
+  c.Color get turn => _chess.turn;
+
+  void set turn(c.Color value) => _chess.turn  = value;
 
   void _refreshSquareDefaultBackgroundColors() {
     bool isBlack = false;
