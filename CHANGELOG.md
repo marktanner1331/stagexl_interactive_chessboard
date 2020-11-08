@@ -1,4 +1,9 @@
-## 1.2.0  - 25/02/2018.
+## 1.3.0  - 07/11/2020.
+
+- chessboard now keeps a Chess object in sync
+
+
+## 1.2.0  - 07/11/2020.
 
 - added new methods for getting the piece on a given square.
 

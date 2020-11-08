@@ -9,6 +9,8 @@ import './LeftLabels.dart';
 import './BottomLabels.dart';
 
 class Chessboard extends Sprite {
+  Chess _chess;
+
   num _size = 100;
 
   ///the background color of black squares
@@ -103,7 +105,7 @@ class Chessboard extends Sprite {
       addChild(_bottomLabels);
     }
 
-    redraw();
+    loadFromChessObject(Chess());
   }
 
   void _refreshSquareDefaultBackgroundColors() {
@@ -131,6 +133,11 @@ class Chessboard extends Sprite {
 
   ///loads chess pieces onto the board from the given chess object
   void loadFromChessObject(Chess chess) {
+    _chess = chess;
+    _refreshPieces();
+  }
+
+  void _refreshPieces() {
     for (int i = Chess.SQUARES_A8; i <= Chess.SQUARES_H1; i++) {
       /* did we run off the end of the board */
       if ((i & 0x88) != 0) {
@@ -138,7 +145,7 @@ class Chessboard extends Sprite {
         continue;
       }
 
-      Piece piece = chess.board[i];
+      Piece piece = _chess.board[i];
       if (piece == null) {
         _board[i].piece = null;
       } else {
@@ -146,6 +153,18 @@ class Chessboard extends Sprite {
         _board[i].piece = pieceSprite;
       }
     }
+  }
+
+  void clear() {
+    _chess.clear();
+    _refreshPieces();
+    resetAllSquareColors();
+  }
+
+  void reset() {
+    _chess.reset();
+    _refreshPieces();
+    resetAllSquareColors();
   }
 
   ///resets the background colors of all squares back to their original checkered pattern
@@ -212,10 +231,21 @@ class Chessboard extends Sprite {
   ///or it can be a string e.g. 'a3'
   void remove(dynamic square) {
     if (square is int) {
+      String squareName = _getSquareNameFromOffset(square);
+      _chess.remove(squareName);
       _board[square].piece = null;
     } else {
+      _chess.remove(square);
       _board[Chess.SQUARES[square]].piece = null;
     }
+  }
+  
+  List<Move> getPossibleMovesForSquare(String square) {
+    return _chess.generate_moves({"square": square});
+  }
+
+  String _getSquareNameFromOffset(int offset) {
+    return Chess.SQUARES.entries.where((element) => element.value == offset).first.key;
   }
 
   ///puts a piece on the given square
@@ -225,14 +255,25 @@ class Chessboard extends Sprite {
     Sprite pieceSprite = PieceFactory.getSpriteForPiece(piece);
 
     if (square is int) {
+      String squareName = _getSquareNameFromOffset(square);
+      _chess.put(piece, squareName);
       _board[square].piece = pieceSprite;
     } else {
+      _chess.put(piece, square);
       _board[Chess.SQUARES[square]].piece = pieceSprite;
     }
   }
 
-  Piece get(String square) {
-    return PieceFactory.getPieceForSprite(_board[Chess.SQUARES[square]].piece);
+  ///get a piece on the given square
+  ///square can either be an int stored in the same format used in chess.dart (used in Move.from and Move.to)
+  ///or it can be a string e.g. 'a3'
+  Piece get(dynamic square) {
+    if (square is int) {
+      String squareName = _getSquareNameFromOffset(square);
+     return _chess.get(squareName);
+    } else {
+      return _chess.get(square);
+    }
   }
 
   ///redraws and resizes the board, it may be necessary to call this manually
