@@ -1,3 +1,7 @@
+## 1.3.0  - 08/11/2020.
+
+- made getSquareNameFromOffset public
+
 ## 1.3.0  - 07/11/2020.
 
 - chessboard now keeps a Chess object in sync
